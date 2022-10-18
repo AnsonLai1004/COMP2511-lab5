@@ -1,20 +1,27 @@
 package unsw.sso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import unsw.sso.providers.Hoogle;
 import unsw.sso.providers.LinkedOut;
 
 public class Browser {
-    private Token currentToken = null;
+
     private String currentPage = null;
     private String previousPage = null;
     private ClientApp currentApp = null;
+    private List<Token> cache = new ArrayList<Token>();
 
     public void visit(ClientApp app) {
-        currentToken = null;
-        
         this.previousPage = null;
         this.currentPage = "Select a Provider";
         this.currentApp = app;
+        for (Token t : cache) {
+            if (app.isValidToken(t)) {
+                this.currentPage = "Home";
+            }
+        }
     }
 
     public String getCurrentPageName() {
@@ -23,7 +30,9 @@ public class Browser {
 
     public void clearCache() {
         // TODO:
+        cache.clear();
     }
+    
 
     public void interact(Object using) {
         if (using == null) {
@@ -53,7 +62,7 @@ public class Browser {
                         this.previousPage = currentPage;
                         this.currentPage = "Home";
     
-                        this.currentToken = token;
+                        this.cache.add(token);
                         this.currentApp.registerUser((Token)token);
                     } else {
                         // If accessToken is null, then the user is not authenticated
@@ -73,7 +82,7 @@ public class Browser {
                         this.previousPage = currentPage;
                         this.currentPage = "Home";
     
-                        this.currentToken = token;
+                        this.cache.add(token);
                         this.currentApp.registerUser((Token)token);
                     } else {
                         // If accessToken is null, then the user is not authenticated

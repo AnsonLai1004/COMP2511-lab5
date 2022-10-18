@@ -50,4 +50,11 @@ public class ClientApp {
     public boolean hasHoogleUser(String email) {
         return usersExist.getOrDefault(email, false);
     }
+
+    public boolean isValidToken(Token token) {
+        if (token.getAccessToken() == null) return false;
+        // only hoogle is supported right now!  So we presume hoogle on user
+        return usersExist.containsKey(token.getUserEmail());
+
+    }
 }
