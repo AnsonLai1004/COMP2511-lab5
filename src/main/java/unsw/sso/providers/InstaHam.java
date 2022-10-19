@@ -9,7 +9,7 @@ import java.util.UUID;
 import unsw.sso.Browser;
 import unsw.sso.Token;
 
-public class InstaHam {
+public class InstaHam extends Provider {
     private Map<String, Browser> users = new HashMap<>();
     private Map<String, Set<String>> userCodes = new HashMap<>();
 

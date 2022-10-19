@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import unsw.sso.Token;
 
-public class Hoogle {
+public class Hoogle extends Provider {
     private Map<String, String> userMappings = new HashMap<>();
 
     public void addUser(String email, String password) {
@@ -21,4 +21,5 @@ public class Hoogle {
             return new Token(null, email, getClass().getSimpleName());
         }
     }
+
 }

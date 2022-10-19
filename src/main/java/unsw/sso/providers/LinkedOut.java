@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import unsw.sso.Token;
 
-public class LinkedOut {
+public class LinkedOut extends Provider{
     private Map<String, String> userMappings = new HashMap<>();
 
     public void addUser(String email, String password) {

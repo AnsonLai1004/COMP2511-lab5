@@ -3,11 +3,9 @@ package unsw.sso;
 import java.util.HashMap;
 import java.util.Map;
 
-import unsw.sso.providers.Hoogle;
-import unsw.sso.providers.LinkedOut;
+import unsw.sso.providers.Provider;
 
 public class ClientApp {
-    private boolean hasHoogle = false;
     private Map<String, Boolean> usersExist = new HashMap<>();
     private final String name;
 
@@ -20,18 +18,8 @@ public class ClientApp {
     }
 
     // TODO: you'll probably want to change a lot of this class
-    public void registerProvider(Object o) {
-        if (o instanceof Hoogle) {
-            hasHoogle = true;
-        }    
-    }
-
-    public boolean hasHoogle() {
-        return hasHoogle;
-    }
-
-    public boolean hasLinkedOut() {
-        return true;
+    public void registerProvider(Provider provider) {
+        provider.registerProvider(this);
     }
 
     public void registerUser(Token token) {
@@ -39,12 +27,8 @@ public class ClientApp {
         usersExist.put(token.getUserEmail(), true);
     }
 
-    public boolean hasUserForProvider(String email, Object provider) {
-        if (provider instanceof LinkedOut) {
-            return true;
-        }
-        
-        return provider instanceof Hoogle && this.hasHoogle && this.usersExist.getOrDefault(email, false);
+    public boolean hasUserForProvider(String email, Provider provider) {
+        return provider.hasProvider(this) && this.usersExist.getOrDefault(email, false);
     }
 
     public boolean hasHoogleUser(String email) {
@@ -53,8 +37,12 @@ public class ClientApp {
 
     public boolean isValidToken(Token token) {
         if (token.getAccessToken() == null) return false;
-        // only hoogle is supported right now!  So we presume hoogle on user
         return usersExist.containsKey(token.getUserEmail());
-
     }
+
+    public boolean hasProvider(Provider provider) {
+        return provider.hasProvider(this);
+    }
+
+    
 }

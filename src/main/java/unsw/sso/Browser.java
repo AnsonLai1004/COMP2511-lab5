@@ -5,6 +5,7 @@ import java.util.List;
 
 import unsw.sso.providers.Hoogle;
 import unsw.sso.providers.LinkedOut;
+import unsw.sso.providers.Provider;
 
 public class Browser {
 
@@ -45,10 +46,10 @@ public class Browser {
                 // if the currentApp doesn't have hoogle
                 // then it has no providers, which just will prevent
                 // transition.
-                if (using instanceof Hoogle && currentApp.hasHoogle()) {
+                if (using instanceof Hoogle && currentApp.hasProvider((Provider) using)) {
                     this.previousPage = currentPage;
                     this.currentPage = "Hoogle Login";
-                } else if (using instanceof LinkedOut && currentApp.hasLinkedOut()) {
+                } else if (using instanceof LinkedOut && currentApp.hasProvider((Provider) using)) {
                     this.previousPage = currentPage;
                     this.currentPage = "LinkedOut Login";
                     // do nothing...
