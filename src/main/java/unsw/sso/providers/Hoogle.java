@@ -6,10 +6,12 @@ import java.util.Objects;
 import java.util.UUID;
 
 import unsw.sso.Token;
+import unsw.sso.state.HoogleLogin;
+import unsw.sso.state.Page;
 
 public class Hoogle extends Provider {
     private Map<String, String> userMappings = new HashMap<>();
-
+    
     public void addUser(String email, String password) {
         userMappings.put(email, password);
     }
@@ -21,5 +23,19 @@ public class Hoogle extends Provider {
             return new Token(null, email, getClass().getSimpleName());
         }
     }
+
+    @Override
+    public Page getLoginPage() {
+        return new HoogleLogin();
+    }
+
+    @Override
+    public String getProviderString() {
+        return "Hoogle";
+    }
+
+    
+
+
 
 }

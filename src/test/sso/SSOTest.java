@@ -14,6 +14,7 @@ import unsw.sso.Browser;
 import unsw.sso.providers.Hoogle;
 import unsw.sso.providers.InstaHam;
 import unsw.sso.providers.LinkedOut;
+import unsw.sso.state.SelectAProvider;
 
 /**
  * SSO Tests
@@ -138,6 +139,8 @@ public class SSOTest {
             assertEquals(browser.getCurrentPageName(), null);
 
             browser.visit(app);
+            assertEquals(browser.getCurrentPageName(), "Select a Provider");
+
             browser.interact(hoogle);
             assertEquals("Hoogle Login", browser.getCurrentPageName());
             browser.interact(null);

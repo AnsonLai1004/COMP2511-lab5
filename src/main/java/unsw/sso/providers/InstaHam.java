@@ -8,6 +8,8 @@ import java.util.UUID;
 
 import unsw.sso.Browser;
 import unsw.sso.Token;
+import unsw.sso.state.InstaHamLogin;
+import unsw.sso.state.Page;
 
 public class InstaHam extends Provider {
     private Map<String, Browser> users = new HashMap<>();
@@ -44,4 +46,16 @@ public class InstaHam extends Provider {
             thread.start();
         }
     }
+
+    @Override
+    public Page getLoginPage() {
+        return new InstaHamLogin();
+    }
+
+    @Override
+    public String getProviderString() {
+        return "InstaHam";
+    }
+
+
 }

@@ -6,6 +6,8 @@ import java.util.Objects;
 import java.util.UUID;
 
 import unsw.sso.Token;
+import unsw.sso.state.LinkedOutLogin;
+import unsw.sso.state.Page;
 
 public class LinkedOut extends Provider{
     private Map<String, String> userMappings = new HashMap<>();
@@ -21,4 +23,15 @@ public class LinkedOut extends Provider{
             return new Token(null, email, getClass().getSimpleName());
         }
     }
+
+    @Override
+    public Page getLoginPage() {
+        return new LinkedOutLogin();
+    }
+
+    @Override
+    public String getProviderString() {
+        return "LinkedOut";
+    }
+    
 }
